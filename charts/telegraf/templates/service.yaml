@@ -41,6 +41,11 @@ spec:
     targetPort: {{ trimPrefix ":" $value.service_address | int64 }}
     name: "influxdb-v2-listener"
     {{- end }}
+    {{- if eq $key "opentelemetry" }}
+  - port: {{ trimPrefix ":" $value.service_address | int64 }}
+    targetPort: {{ trimPrefix ":" $value.service_address | int64 }}
+    name: "opentelemetry"
+    {{- end }}
     {{- if eq $key "statsd" }}
   - port: {{ trimPrefix ":" $value.service_address | int64 }}
     targetPort: {{ trimPrefix ":" $value.service_address | int64 }}
@@ -78,6 +83,12 @@ spec:
     protocol: {{ upper (substr 0 3 $value.service_address) }}
     name: {{ printf "%s-%s" "socket-listener" (regexFind "[0-9]+$" $value.service_address) }}
     {{- end }}
+    {{- end }}
+    {{- if eq $key "cisco_telemetry_mdt" }}
+  - port: {{ trimPrefix ":" $value.service_address | int64 }}
+    targetPort: {{ trimPrefix ":" $value.service_address | int64 }}
+    protocol: "TCP"
+    name: "cisco-telemetry-mdt"
     {{- end }}
   {{- end -}}
   {{- end }}

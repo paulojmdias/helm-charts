@@ -122,6 +122,7 @@ spec:
               {{- if .Values.data.https.enabled }}
               scheme: HTTPS
               {{- end }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds | default 3600 }}
           readinessProbe:
             initialDelaySeconds: 30
             httpGet:
